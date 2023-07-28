@@ -1,6 +1,6 @@
 LOGFILE=$(LOGPATH) `date +'DATE: %d/%m/%y - TIME: %H:%M:%S'`
 CPP_FILES = main.cpp worms.cpp timer.cpp gameobject.cpp obstacles.cpp weapon.cpp powerbar.cpp projectile.cpp shapes.cpp bazooka.cpp utils.cpp shotgun.cpp view.cpp
-AUTHOR =
+AUTHOR = `KATOUZIAN Pouria`
 MESSAGE = 
 CFLAGS += -I/usr/include/SDL 
 CFLAGS += -I/usr/include/SDL2
@@ -9,7 +9,7 @@ all:
 	#./main
 
 send:
-	git add *.cpp *.hpp Makefile assets brief.pdf
+	git add .
 	git commit -m "Sent -> $(LOGFILE) by $(AUTHOR) : $(MESSAGE)"
 	#git push -u origin main
 	git push
