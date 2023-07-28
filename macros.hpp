@@ -1,0 +1,54 @@
+#ifndef __MACROS_HPP__
+#define __MACROS_HPP__
+
+struct Color
+{
+    int r, g, b, alpha;
+};
+
+#define WIDTH 1280
+#define HEIGHT 720
+
+#define WORM_WIDTH 30
+#define WORM_HEIGHT 50
+
+#define WEAPON_WIDTH 30
+#define WEAPON_HEIGHT 15
+
+#define FPS 30
+
+#define ROCKET_MASS 5
+// #define ROCKET_CROSS_SECTIONAL_AREA 1
+#define BULLET_MASS 2
+#define CROSS_SECTIONAL_AREA 1
+
+#define GRAVITY 500
+#define AIR_DENSITY 1
+#define DRAG_COEFFICIENT 0.001
+
+#define BAZOOKA_RELOADING_DELAY 30
+#define BAZOOKA_INITIAL_AMMUNITION 2
+#define BAZOOKA_DAMAGE_POINT 100
+#define BAZOOKA_RADIUS_OF_DAMAGE 24
+
+#define SHOTGUN_RELOADING_DELAY 20
+#define SHOTGUN_INITIAL_AMMUNITION 4
+#define SHOTGUN_DAMAGE_POINT 20
+
+#define ANGULAR_SPEED_WEAPON 1
+
+#define POWER_BAR_X 730
+#define POWER_BAR_Y 20
+#define POWER_BAR_WIDTH 400
+#define POWER_BAR_HEIGHT 50
+#define POWER_BAR_TICKS_MILLIS 10
+#define POWER_BAR_MAX_POWER 500
+#define POWER_BAR_POWER_STEP 10
+
+const Color BLUE = {0, 0, 255, 255};
+const Color BROWN = {128, 96, 20, 255};
+const Color RED = {255, 0, 0, 255};
+const Color GREY = {211, 211, 211, 255};
+const Color BLACK = {0, 0, 0, 255};
+
+#endif
