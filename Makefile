@@ -10,8 +10,7 @@ all:
 
 send:
 	git add .
-	git commit -m "Sent -> $(LOGFILE) by $(AUTHOR) : $(MESSAGE)"
-	#git push -u origin main
+	git commit -m "new commit"
 	git push
 
 receive:
