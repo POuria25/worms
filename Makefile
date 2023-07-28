@@ -1,6 +1,6 @@
 LOGFILE=$(LOGPATH) `date +'DATE: %d/%m/%y - TIME: %H:%M:%S'`
 CPP_FILES = main.cpp worms.cpp timer.cpp gameobject.cpp obstacles.cpp weapon.cpp powerbar.cpp projectile.cpp shapes.cpp bazooka.cpp utils.cpp shotgun.cpp view.cpp
-AUTHOR = `KATOUZIAN Pouria`
+AUTHOR = 
 MESSAGE = 
 CFLAGS += -I/usr/include/SDL 
 CFLAGS += -I/usr/include/SDL2
