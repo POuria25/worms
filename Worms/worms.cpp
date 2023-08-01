@@ -1,15 +1,5 @@
 #include "worms.hpp"
-#include "shapes.hpp"
-#include "direction.hpp"
-#include "constants.hpp"
-#include "timer.hpp"
-#include "obstacles.hpp"
-#include "bazooka.hpp"
-#include "shotgun.hpp"
-#include "view.hpp"
-#include "main.hpp"
-#include <iostream>
-#include <string>
+#include "game.hpp"
 
 Worms::Worms(Point position, int health, Direction direction, const char *name, std::shared_ptr<Obstacles> obstacles, SDL_Point wormGUIPosition)
 {
@@ -95,7 +85,7 @@ void Worms::setDownPressed(bool value)
 
 int Worms::getHealth()
 {
-   if(this->health <= 0)
+   if (this->health <= 0)
    {
       return 0;
    }
@@ -238,7 +228,7 @@ void Worms::draw()
 {
 
    SDL_Renderer *renderer = View::getInstance()->getRenderer();
-   TTF_Font *font = View::getInstance()->getFont(); // Add this line to retrieve the font
+   TTF_Font *font = View::getInstance()->getFont();
 
    // Render player names
    SDL_Surface *surface = TTF_RenderText_Solid(font, getName(), {0, 0, 0, 255});
@@ -303,13 +293,15 @@ void Worms::draw()
    if (SDL_RenderCopyEx(renderer, movingWormImage, NULL, &movingWormRect, 0, NULL, this->isFacingLeft() ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL) != 0)
       std::cout << "Error" << std::endl;
 
+   Rectangle tmpWeaponRect;
+   SDL_Rect weaponRect;
    // drawing the weapon
    if ((mode == AIMING || mode == SHOOTING || mode == FIRING) && this->getState() == RESTING)
    {
       Weapon *tmpWeapon = this->getWeapon();
-      Rectangle tmpWeaponRect = this->getWeaponRect();
+      tmpWeaponRect = this->getWeaponRect();
       SDL_Texture *weaponImage = tmpWeapon->weaponImage();
-      SDL_Rect weaponRect = {(int)tmpWeaponRect.x, (int)tmpWeaponRect.y, (int)tmpWeaponRect.width, (int)tmpWeaponRect.height};
+      weaponRect = {(int)tmpWeaponRect.x, (int)tmpWeaponRect.y, (int)tmpWeaponRect.width, (int)tmpWeaponRect.height};
       SDL_RenderCopyEx(renderer, weaponImage, NULL, &weaponRect, tmpWeapon->getAngle(), NULL, this->isFacingLeft() ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL);
    }
 
@@ -319,10 +311,26 @@ void Worms::draw()
       Projectile *tmpProjectile = this->getWeapon()->getProjectile();
       int w = this->getWeapon()->getAmmoWidth();
       int h = this->getWeapon()->getAmmoHeight();
-      SDL_Rect ammoRect = {tmpProjectile->getX(), tmpProjectile->getY(), w, h};
+      SDL_Rect ammoRect = {tmpProjectile->getX(), tmpProjectile->getY(), w, h}; // dimension of the projectile
       SDL_RendererFlip flip = this->isFacingLeft() ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
       SDL_Texture *projectileTexture = this->getWeapon()->getAmmoImage();
-      SDL_RenderCopyEx(renderer, projectileTexture, NULL, &ammoRect, tmpProjectile->getAngle(), NULL, flip);
+
+      SDL_Point center;
+      if (this->isFacingLeft())
+      {
+         // Left player
+         std::cout << "Left player" << std::endl;
+         SDL_Point centerOffset = {-10, 10}; // The distance vector between weapon center and worm center for left player
+         center = {(int)tmpWeaponRect.x + (int)tmpWeaponRect.width / 2 + (int)tmpWeaponRect.x, (int)tmpWeaponRect.y + (int)tmpWeaponRect.height / 2 + (int)tmpWeaponRect.y};
+      }
+      else
+      {
+         std::cout << "Right player" << std::endl;
+         SDL_Point centerOffset = {10, 10}; // The distance vector between weapon center and worm center for right player
+         center = {weaponRect.x + weaponRect.w / 2 + centerOffset.x, weaponRect.y + weaponRect.h / 2 + centerOffset.y};
+      }
+
+      SDL_RenderCopyEx(renderer, projectileTexture, NULL, &ammoRect, tmpProjectile->getAngle(), &center, flip);
    }
 
    if (mode == SHOOTING)
@@ -466,11 +474,6 @@ void Worms::action()
 
       return;
    }
-   // TODO fixer segfault, regarder ici / dans projectile / weapon / shotgun / bazooka pq la balle ne se deplace pas
-   // if (this->getWeapon()->isShooting())
-   // {
-   //    this->getWeapon()->reset();
-   // }
 
    if (mode == WALKING || mode == AIMING || mode == SHOOTING)
       this->currentWeapon->reload();
@@ -483,7 +486,6 @@ void Worms::action()
       int y = getWeapon()->getProjectile()->getY();
       double xPoint = (double)getWeapon()->getProjectile()->getX();
       double yPoint = (double)getWeapon()->getProjectile()->getY();
-      // std::cout << "x;y " << x << " " << y << std::endl;
 
       if (obstacles->collide(x, y) || collide(getRectangle(), Point{xPoint, yPoint}))
       {
@@ -498,10 +500,8 @@ void Worms::action()
 
       if ((x <= 0 || x >= 1280))
       {
-         std::cout << "[x : " << x << " y : "<< y << "]"<< std::endl;
          getWeapon()->stopShooting();
          mode = WALKING;
-         std::cout << "ok" << std::endl;
       }
    }
 

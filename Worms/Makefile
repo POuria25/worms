@@ -1,5 +1,5 @@
 LOGFILE=$(LOGPATH) `date +'DATE: %d/%m/%y - TIME: %H:%M:%S'`
-CPP_FILES = main.cpp worms.cpp timer.cpp gameobject.cpp obstacles.cpp weapon.cpp powerbar.cpp projectile.cpp shapes.cpp bazooka.cpp utils.cpp shotgun.cpp view.cpp
+CPP_FILES = main.cpp worms.cpp timer.cpp gameobject.cpp obstacles.cpp weapon.cpp powerbar.cpp projectile.cpp shapes.cpp bazooka.cpp utils.cpp shotgun.cpp view.cpp game.cpp
 AUTHOR = 'Pouria Inc'
 MESSAGE = 
 CFLAGS += -I/usr/include/SDL 

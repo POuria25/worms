@@ -25,7 +25,7 @@ constexpr int CROSS_SECTIONAL_AREA = 1;
 
 constexpr int GRAVITY = 500;
 constexpr int AIR_DENSITY = 1;
-constexpr int DRAG_COEFFICIENT = 0.001;
+constexpr double DRAG_COEFFICIENT = 0.001;
 
 constexpr int BAZOOKA_RELOADING_DELAY = 30;
 constexpr int BAZOOKA_INITIAL_AMMUNITION = 2;

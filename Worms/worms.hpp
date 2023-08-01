@@ -10,6 +10,13 @@
 #include "obstacles.hpp"
 #include "weapon.hpp"
 #include "powerbar.hpp"
+#include "constants.hpp"
+#include "bazooka.hpp"
+#include "shotgun.hpp"
+#include "view.hpp"
+//#include "main.hpp"
+#include <iostream>
+#include <string>
 
 enum WormState
 {
@@ -25,7 +32,8 @@ enum Mode
    AIMING,
    WALKING,
    SHOOTING,
-   FIRING
+   FIRING,
+   END
 };
 
 class Worms : public GameObject
@@ -51,7 +59,7 @@ private:
    Timer *timeWalking;
    Timer *timeFlying;
    Timer *timeFalling;
-   Timer *switchPlayerTimer;
+   //Timer *switchPlayerTimer;
    int walkMode;
    Powerbar *powerbar;
    Mode mode;
@@ -102,6 +110,8 @@ public:
    void startTurn();
    void setMode(Mode newMode);
    Timer *timerWalk;
+   Timer *switchPlayerTimer;
+
    ~Worms() override;
 };
 

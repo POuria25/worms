@@ -1,9 +1,9 @@
-#ifndef MAIN_HPP__
-#define MAIN_HPP__
+// #ifndef MAIN_HPP__
+// #define MAIN_HPP__
 
-#include "worms.hpp"
+// #include "worms.hpp"
 
-Worms* getEnemy(Worms *player);
-bool isMovingPlayer(Worms *player);
+// Worms* getEnemy(Worms *player);
+// bool isMovingPlayer(Worms *player);
 
-#endif
+// #endif
