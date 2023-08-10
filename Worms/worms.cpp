@@ -456,7 +456,7 @@ void Worms::action()
       state = FALLING;
    }
    // Handle flying if upPressed and appropriate mode
-   if (upPressed && (mode == WALKING || state == FLYING || mode == SHOOTING))
+   if (upPressed && (mode == WALKING || state == FLYING))
    {
       if (isMovingPlayer(this))
       {
