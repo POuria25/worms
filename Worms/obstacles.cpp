@@ -50,7 +50,8 @@ void Obstacles::destroy(Point position, double radius)
     for (int x = position.x - radius; x <= position.x + radius; x++)
         for (int y = position.y - radius; y <= position.y + radius; y++)
             // Check if the current position is within the bounds of the obstacle grid
-            if (position.x >= 0 && position.x < WIDTH && position.y >= 0 && position.y < HEIGHT)
+            //if (position.x >= 0 && position.x < WIDTH && position.y >= 0 && position.y < HEIGHT)
+            if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
             {
                 // Calculate the distance between the current position and the center of the destroyed area
                 double distance = sqrt(pow((x - position.x), 2) + pow((y - position.y), 2));

@@ -34,7 +34,7 @@ public:
    static constexpr double DRAG_COEFFICIENT = 0.001;
 
    static constexpr int BAZOOKA_RELOADING_DELAY = 30000;
-   static constexpr int BAZOOKA_INITIAL_AMMUNITION = 2;
+   static constexpr int BAZOOKA_INITIAL_AMMUNITION = 10;
    static constexpr int BAZOOKA_DAMAGE_POINT = 10;
    static constexpr int BAZOOKA_RADIUS_OF_DAMAGE = 24;
 
