@@ -17,26 +17,55 @@
 #include "view.hpp"
 #include "utils.hpp"
 
+/**
+ * @brief return true if the player is moving
+ *
+ * @param player
+ * @return true
+ * @return false
+ */
 bool isMovingPlayer(Worms *player);
-Worms *getEnemy(Worms *player);
 
+/**
+ * @brief Get the Enemy object
+ *
+ * @param player
+ * @return Worms*
+ */
+Worms *getEnemy(Worms *player);
 
 class Game
 {
 public:
+   /**
+    * @brief Construct a new Game object
+    *
+    */
    Game();
-    Worms *getLeftPlayer();
-    Worms *getRightPlayer();
-    Worms *getMovingPlayer();
-    Worms *getStaticPlayer();
-    Worms *getPlayer();
-    bool isGameRunning();
-   SDL_Renderer *getRenderer();
-    std::shared_ptr<Timer> getWalkTimer();
-    std::shared_ptr<Timer> getFPSTimer();
-    TTF_Font *getFont();
-    bool EndMessage();
+   /**
+    * @brief displays a victory message for the winning player if one of them has lost, indicating the game's end status.
+    *
+    * @return true
+    * @return false
+    */
+   bool EndMessage();
+   /**
+    * @brief controls the game's turn-based movement flow.
+    * It checks if the game has ended, updates player actions,
+    * manages player turns,and handles rendering of game elements on the screen, such as obstacles and players.
+    *
+    */
    void movementManagement();
+   Worms *getLeftPlayer();
+   Worms *getRightPlayer();
+   Worms *getMovingPlayer();
+   Worms *getStaticPlayer();
+   Worms *getPlayer();
+   bool isGameRunning();
+   SDL_Renderer *getRenderer();
+   std::shared_ptr<Timer> getWalkTimer();
+   std::shared_ptr<Timer> getFPSTimer();
+   TTF_Font *getFont();
    ~Game();
 };
 

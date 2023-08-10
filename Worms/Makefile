@@ -40,9 +40,9 @@ tar:
 # git add .
 # git commit -m "first commit"
 # (git branch -M <new-branch name>) (optional)
-# git remote add origin <url> (i.e. git@github.com:Yperite/Worms.git)
+# git remote add origin <url> (i.e. git@github.com:Pouria/Worms.git)
 # git push -u origin <new-branch-name> (or by default master or main )
 
 # then runnning : 
-# make send AUTHOR="Quentin" MESSAGE="update"
+# make send AUTHOR="Pouria" MESSAGE="update"
 # will produce a nice push with an automatic push to the git repo

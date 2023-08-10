@@ -23,19 +23,15 @@ void Utils::manageEvents(bool &isRunning, Worms *movingPlayer)
                 break;
             case SDLK_UP:
                 movingPlayer->setUpPressed(true);
-                 //std::cout << "setUpPressed(true);" <<  //std::endl;
                 break;
             case SDLK_LEFT:
                 movingPlayer->setLeftPressed(true);
-                 //std::cout << "leftPressed(true)" <<  //std::endl;
                 break;
             case SDLK_RIGHT:
                 movingPlayer->setRightPressed(true);
-                 //std::cout << "setLeftPressed(true)" <<  //std::endl;
                 break;
             case SDLK_DOWN:
                 movingPlayer->setDownPressed(true);
-                 //std::cout << "setDownPressed(true)" <<  //std::endl;
                 break;
             default:
                 break;
@@ -46,19 +42,15 @@ void Utils::manageEvents(bool &isRunning, Worms *movingPlayer)
             {
             case SDLK_UP:
                 movingPlayer->setUpPressed(false);
-                 //std::cout << "setUpPressed(false);" <<  //std::endl;
                 break;
             case SDLK_LEFT:
                 movingPlayer->setLeftPressed(false);
-                 //std::cout << "leftPressed(false)" <<  //std::endl;
                 break;
             case SDLK_RIGHT:
                 movingPlayer->setRightPressed(false);
-                 //std::cout << "setLeftPressed(false)" <<  //std::endl;
                 break;
             case SDLK_DOWN:
                 movingPlayer->setDownPressed(false);
-                 //std::cout << "setDownPressed(false)" <<  //std::endl;
                 break;
             case SDLK_SPACE:
                 switch (movingPlayer->getMode())

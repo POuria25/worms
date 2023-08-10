@@ -14,7 +14,6 @@
 #include "bazooka.hpp"
 #include "shotgun.hpp"
 #include "view.hpp"
-//#include "main.hpp"
 #include <iostream>
 #include <string>
 
@@ -59,55 +58,145 @@ private:
    Timer *timeWalking;
    Timer *timeFlying;
    Timer *timeFalling;
-   //Timer *switchPlayerTimer;
    int walkMode;
    Powerbar *powerbar;
    Mode mode;
    const char *name;
 
 public:
+   bool upPressed;
+   bool leftPressed;
+   bool rightPressed;
+   bool downPressed;
+   bool isRunning;
+
+   /**
+    * @brief implementation of draw() function inherited from GameObject
+    *
+    */
    void draw() override;
+
+   /**
+    * @brief Construct a new Worms object
+    *
+    * @param position
+    * @param health
+    * @param direction
+    * @param name
+    * @param obstacles
+    * @param wormGUIPosition
+    */
    Worms(Point position, int health, Direction direction, const char *name, std::shared_ptr<Obstacles> obstacles, SDL_Point wormGUIPosition);
-   int getHealth();
+
+   /**
+    * @brief Checks if the worm is still alive based on its health.
+    *
+    * @return true
+    * @return false
+    */
    bool isAlive();
+
+   /**
+    * @brief Handles the movement of the worm, taking collision with obstacles and adversary into account.
+    * 
+    * @param direction 
+    * @param adversary 
+    */
+   void move(Direction direction, std::shared_ptr<Obstacles>, Worms *adversary);
+
+   /**
+    * @brief Decreases the worm's health by the specified damage amount.
+    * 
+    * @param damage 
+    */
+   void takeDamage(int damage);
+
+   /**
+    * @brief Checks if the worm is currently facing left.
+    * 
+    * @return true 
+    * @return false 
+    */
+   bool isFacingLeft();
+
+   /**
+    * @brief Launches a projectile from the worm's weapon with the specified power.
+    * 
+    * @param power 
+    */
+   void launchProjectile(int power);
+
+   /**
+    * @brief Handles the flying behavior of the worm using the given delta time.
+    * 
+    * @param obstacles 
+    * @param adversary 
+    * @param deltaTime 
+    */
+   void fly(std::shared_ptr<Obstacles> obstacles, Worms *adversary, double deltaTime);
+
+   /**
+    * @brief Manages the falling behavior of the worm, accounting for collisions and adjusting its position.
+    * 
+    * @param adversary 
+    */
+   void fall(std::shared_ptr<Obstacles>, Worms *adversary);
+
+   /**
+    * @brief Equips the bazooka weapon for the worm.
+    * 
+    */
+   void equipBazooka();
+
+   /**
+    * @brief Equips the shotgun weapon for the worm.
+    * 
+    */
+   void equipShotgun();
+
+   /**
+    * @brief Checks if the current player's turn has finished.
+    * 
+    * @return true 
+    * @return false 
+    */
+   bool isTurnFinish();
+
+   /**
+    * @brief Manages the actions of the worm during its turn, including handling shooting, aiming, and falling.
+    * 
+    */
+   void action();
+
+
+   /**
+    * @brief Initiates the start of a player's turn, resetting relevant variables.
+    * 
+    */
+   void startTurn();
+
+   const char *getName();
    Rectangle getRectangle();
+   SDL_Point getWeaponMiddle();
    Point getBottomPosition();
    Point getTopPosition();
    void setBottomPosition(Point position);
    void setTopPosition(Point position);
-   void move(Direction direction, std::shared_ptr<Obstacles>, Worms *adversary);
-   void takeDamage(int damage);
+   int getHealth();
    int getX();
    int getY();
    int getWidth();
    int getHeight();
    Rectangle getWeaponRect();
    Weapon *getWeapon();
-   bool isFacingLeft();
-   WormState getState();
    void setState(WormState newState);
-   void launchProjectile(int power);
-   void fly(std::shared_ptr<Obstacles> obstacles, Worms *adversary, double deltaTime);
-   void fall(std::shared_ptr<Obstacles>, Worms *adversary);
-   const char *getName();
-   void equipBazooka();
-   void equipShotgun();
-   bool isTurnFinish();
-   void action();
-   bool upPressed;
-   bool leftPressed;
-   bool rightPressed;
-   bool downPressed;
-   bool isRunning;
-   void manageEvents();
+   WormState getState();
    void setUpPressed(bool value);
    void setLeftPressed(bool value);
    void setRightPressed(bool value);
    void setDownPressed(bool value);
-   void initializePowerBar();
-   Powerbar* getPowerBar();
+   Powerbar *getPowerBar();
    Mode getMode();
-   void startTurn();
    void setMode(Mode newMode);
    Timer *timerWalk;
    Timer *switchPlayerTimer;

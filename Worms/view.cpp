@@ -53,5 +53,4 @@ View::~View()
    TTF_Quit();
    SDL_QuitSubSystem(SDL_INIT_EVERYTHING);
    SDL_Quit();
-   // delete obstacles; // Cleanup Obstacles object
 }

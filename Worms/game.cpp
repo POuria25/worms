@@ -1,22 +1,23 @@
 
 #include "game.hpp"
-
+#include "constants.hpp"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_ttf.h>
 
 std::shared_ptr<Obstacles> obstacles = std::shared_ptr<Obstacles>(new Obstacles());
-Worms *leftPlayer = new Worms({70, 0}, 100, RIGHT, "Player1", obstacles, {30, 10});
-Worms *rightPlayer = new Worms({1100, 0}, 100, LEFT, "Player2", obstacles, {1180, 10});
+Worms *leftPlayer = new Worms({Constants::INITIAL_PLAYERX1, Constants::INITIAL_PLAYERY1}, Constants::HEALTH, RIGHT, "Player1", obstacles, {30, 10});
+Worms *rightPlayer = new Worms({Constants::INITIAL_PLAYERX2, Constants::INITIAL_PLAYERY2}, Constants::HEALTH, LEFT, "Player2", obstacles, {1180, 10});
 Worms *movingPlayer = leftPlayer, *staticPlayer = rightPlayer;
 bool isRunning = true;
 SDL_Renderer *renderer = View::getInstance()->getRenderer();
-//std::shared_ptr<Timer> timerWalk = std::shared_ptr<Timer>(new Timer(150));
 std::shared_ptr<Timer> timerFPS = std::shared_ptr<Timer>(new Timer(1000 / 30));
+
+
+
 TTF_Font *font = View::getInstance()->font;
 
 Game::Game()
 {
-
 }
 
 SDL_Renderer *Game::getRenderer()
@@ -55,11 +56,6 @@ bool Game::isGameRunning()
    return isRunning;
 }
 
-
-// std::shared_ptr<Timer> getWalkTimer()
-// {
-//    return timerWalk;
-// }
 
 std::shared_ptr<Timer> Game::getFPSTimer()
 {
@@ -100,7 +96,7 @@ bool Game::EndMessage()
       buffer.append(" won !");
       SDL_Surface *surfaceEnd = TTF_RenderText_Solid(font, buffer.c_str(), {0, 0, 0, 255});
       SDL_Texture *tmpTextureEnd = SDL_CreateTextureFromSurface(renderer, surfaceEnd);
-      SDL_Rect tmpRect = {200, 200, WIDTH - 400, HEIGHT - 400};
+      SDL_Rect tmpRect = {200, 200, Constants::WIDTH - 400, Constants::HEIGHT - 400};
       SDL_RenderCopy(renderer, tmpTextureEnd, NULL, &tmpRect);
 
       SDL_DestroyTexture(tmpTextureEnd);
@@ -114,15 +110,14 @@ bool Game::EndMessage()
 
 void Game::movementManagement()
 {
+   if(EndMessage())
+   {
+      getMovingPlayer()->setMode(END);
+      getMovingPlayer()->switchPlayerTimer->stop();
+      return;
+   }
    movingPlayer->action();
    staticPlayer->action();
-
-   SDL_SetRenderDrawColor(renderer, BLUE.r, BLUE.g, BLUE.b, BLUE.alpha); // Blue
-   SDL_RenderClear(renderer);
-   obstacles->draw();
-   leftPlayer->draw();
-   rightPlayer->draw();
-
    if (movingPlayer->isTurnFinish())
    {
       movingPlayer->getWeapon()->reset();
@@ -133,6 +128,12 @@ void Game::movementManagement()
       movingPlayer->startTurn();
       staticPlayer->setMode(WALKING);
    }
+
+   SDL_SetRenderDrawColor(renderer, BLUE.r, BLUE.g, BLUE.b, BLUE.alpha); // Blue
+   SDL_RenderClear(renderer);
+   obstacles->draw();
+   leftPlayer->draw();
+   rightPlayer->draw();
 }
 
 Game::~Game(){

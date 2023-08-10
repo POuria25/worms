@@ -6,12 +6,12 @@
 Obstacles::Obstacles()
 {
     // Initialize all elements of the 'pixels' array to 'false'
-    for (int x = 0; x < WIDTH; x++)
-        for (int y = 0; y < HEIGHT; y++)
+    for (int x = 0; x < Constants::WIDTH; x++)
+        for (int y = 0; y < Constants::HEIGHT; y++)
             this->pixels[x][y] = false;
     // Generate obstacle pattern based on sine wave
-    for (int x = 0; x < WIDTH; x++)
-        for (int y = 20 * sin(PI * 2 * 5 * x) + 420; y < HEIGHT; y++)
+    for (int x = 0; x < Constants::WIDTH; x++)
+        for (int y = 20 * sin(Constants::PI * 2 * 5 * x) + 420; y < Constants::HEIGHT; y++)
             this->pixels[x][y] = true;
     // Create horizontal obstacle at (700, 200) with width 300
     for (int x = 700; x < 700 + 300; x++)
@@ -26,7 +26,7 @@ Obstacles::Obstacles()
 // Check if the given coordinates (x, y) collide with an obstacle
 bool Obstacles::collide(int x, int y)
 {
-    if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT)
+    if (x >= 0 && x < Constants::WIDTH && y >= 0 && y < Constants::HEIGHT)
         return this->pixels[x][y];
     else
         return false;
@@ -44,6 +44,8 @@ bool Obstacles::collide(Rectangle rect)
 
 void Obstacles::destroy(Point position, double radius)
 {
+    int WIDTH = Constants::WIDTH;
+    int HEIGHT = Constants::HEIGHT;
     // Iterate over the region defined by the position and radius
     for (int x = position.x - radius; x <= position.x + radius; x++)
         for (int y = position.y - radius; y <= position.y + radius; y++)
@@ -69,8 +71,9 @@ Point Obstacles::getGround(Point position)
 
 Point Obstacles::getRoof(Point position)
 {
+
     // Iterate from the given position.y downwards to find the roof position
-    for (int y = position.y; y < HEIGHT - 1; y++)
+    for (int y = position.y; y < Constants::HEIGHT - 1; y++)
         if (!this->pixels[(int)position.x][y + 1]) // Check if the pixel below the current position is not an obstacle
             return {position.x, (double)y};        // Return the position with the updated y coordinate
     return position;                               // If no roof position is found, return the original position
@@ -79,11 +82,11 @@ Point Obstacles::getRoof(Point position)
 void Obstacles::draw()
 {
     SDL_Renderer *renderer = View::getInstance()->getRenderer();
-    SDL_Surface *surface = SDL_CreateRGBSurfaceWithFormat(0, WIDTH, HEIGHT, 32, SDL_PIXELFORMAT_RGBA32);
+    SDL_Surface *surface = SDL_CreateRGBSurfaceWithFormat(0, Constants::WIDTH, Constants::HEIGHT, 32, SDL_PIXELFORMAT_RGBA32);
 
-    for (int x = 0; x < WIDTH; x++)
+    for (int x = 0; x < Constants::WIDTH; x++)
     {
-        for (int y = 0; y < HEIGHT; y++)
+        for (int y = 0; y < Constants::HEIGHT; y++)
         {
             if (collide(x, y))
             {
@@ -92,7 +95,7 @@ void Obstacles::draw()
             }
         }
     }
-    SDL_Texture *t = SDL_CreateTextureFromSurface(renderer,surface);
+    SDL_Texture *t = SDL_CreateTextureFromSurface(renderer, surface);
     SDL_RenderCopy(renderer, t, nullptr, nullptr);
     SDL_DestroyTexture(t);
     SDL_FreeSurface(surface);

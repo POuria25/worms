@@ -30,13 +30,33 @@ Projectile::Projectile(Point position, double speed, double angle, ProjectileTyp
 
 void Projectile::move()
 {
-  double deltaT = (double)timer->getTimeSpent() / 1000; //the elapsed time in seconds
+  double deltaT = (double)timer->getTimeSpent() / 1000; // the elapsed time in seconds
   // Calculation of the new position based on the initial position, speed, angle, and gravity
   Point oldPosition{position.x, position.y};
-  position.x = initialPosition.x + speed * cos(initialAngle * PI / 180) * deltaT;
-  position.y = initialPosition.y - speed * sin(initialAngle * PI / 180) * deltaT + 1. * GRAVITY * deltaT * deltaT / 2;
-  //std::cout << speed << "delta :" << deltaT << ", x : " << speed * cos(initialAngle * PI / 180) * deltaT << ", y : " << -speed * sin(initialAngle * PI / 180) * deltaT << ", gravity : " << 1. * GRAVITY * deltaT * deltaT / 2 << std::endl;
-  angle = -atan2((oldPosition.x-position.x), (oldPosition.y-position.y))*180/PI-(initialAngle > 90 && initialAngle < 270 ? -90 : 90);
+  // Calculate the new x and y position based on initial position, speed, angle, and time
+  position.x = initialPosition.x + speed * cos(initialAngle * Constants::PI / 180) * deltaT;
+  position.y = initialPosition.y - speed * sin(initialAngle * Constants::PI / 180) * deltaT + 1. * Constants::GRAVITY * deltaT * deltaT / 2;
+  // Calculate the new angle based on the difference in x positions and initial angle
+  angle = -atan2((oldPosition.x - position.x), (oldPosition.y - position.y)) * 180 / Constants::PI - (initialAngle > 90 && initialAngle < 270 ? -90 : 90);
+}
+
+void Projectile::draw()
+{
+  SDL_Texture *texture = this->ammoShotgunImage;
+  int w = this->wBullet;
+  int h = this->hBullet;
+  if (this->type == ROCKET)
+  {
+    w = this->wRocket;
+    h = this->hRocket;
+    // Set texture to bazooka image
+    texture = this->ammoBazookaImage;
+  }
+  // Create a rectangle representing the projectile's dimensions
+  SDL_Rect ammoRect = {getX(), getY(), w, h};
+  SDL_RendererFlip flip = this->isFacingLeft() ? SDL_FLIP_NONE : SDL_FLIP_HORIZONTAL;
+  // Render the projectile's texture with its calculated properties
+  SDL_RenderCopyEx(View::getInstance()->getRenderer(), texture, NULL, &ammoRect, getAngle(), NULL, flip);
 }
 
 int Projectile::getX()
@@ -57,6 +77,16 @@ ProjectileType Projectile::getType()
 int Projectile::getAngle()
 {
   return angle;
+}
+
+bool Projectile::isFacingLeft()
+{
+  return direction == LEFT;
+}
+
+void Projectile::setProjectileFacing(Direction direction)
+{
+  this->direction = direction;
 }
 
 Projectile::~Projectile()

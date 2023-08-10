@@ -11,8 +11,14 @@ class View
 private:
    SDL_Window* window;
    SDL_Renderer* renderer;
-   Obstacles* obstacles; 
+   Obstacles* obstacles;
+
+   /**
+    * @brief Construct a new View object
+    * 
+    */
    View();
+   
    static std::shared_ptr<View> instance;
 public:
    static std::shared_ptr<View> getInstance();
