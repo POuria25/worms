@@ -31,7 +31,7 @@ memory_sanitizer:
 	clang++ -fsanitize=memory -fno-omit-frame-pointer -g -std=c++17 -I/usr/include/SDL2 -o main $(CPP_FILES) -lSDL2 -lm -lSDL2_ttf
 
 tar:
-	tar -czvf 03.tar.gz *cpp *hpp Makefile assets report.pdf
+	tar -czvf S192865.tar.gz *cpp *hpp Makefile assets report.pdf
 
 .PHONY: all send receive clean tar
 
