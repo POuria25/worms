@@ -1,0 +1,1 @@
+This repository features a Worms-style game developed in C++ using the SDL library. It includes key gameplay mechanics such as character movement, terrain destruction, and projectile dynamics. The project showcases advanced concepts like physics simulation, event handling, and real-time rendering with SDL. Ideal for those interested in game development or learning C++ with SDL.
